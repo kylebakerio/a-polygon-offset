@@ -1,6 +1,6 @@
 # Beating Z-Fighting
 
-![Screenshot from 2022-10-10 11-59-30](https://user-images.githubusercontent.com/6391152/194927006-40620a3f-7443-4b84-9add-a5fc6f39b1a8.png)
+![Screenshot from 2022-10-01 13-30-29](https://user-images.githubusercontent.com/6391152/194931962-f28b97df-1e9b-4317-a947-d7852cd01929.png)
 
 
 ## polygon offset

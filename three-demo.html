@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+    <script src="https://unpkg.com/three@0.137.0/examples/js/geometries/DecalGeometry.js"></script>
+    <script src="https://unpkg.com/three@0.137.0/examples/js/controls/OrbitControls.js"></script>
+  </head>
+  <body>
+  </body>
+  <script>
+    /* import * as THREE from "https://threejs.org/build/three.module.js";
+import { OrbitControls } from "https://threejs.org/examples/jsm/controls/OrbitControls.js";
+import { DecalGeometry } from "https://threejs.org/examples/jsm/geometries/DecalGeometry.js";
+ */
+    // from: https://discourse.threejs.org/t/good-and-relatively-simple-examples-of-decalgeometry/13089
+    // from: https://jsfiddle.net/zrq6unge/1/
+    var mesh, renderer, scene, camera, controls;
+    var mouse, raycaster, helper, decalMaterial;
+
+    init();
+    animate();
+
+    function init() {
+        // renderer
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        document.body.appendChild( renderer.domElement );
+
+        // scene
+        scene = new THREE.Scene();
+
+        // camera
+        camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+        camera.position.set( 20, 20, 20 );
+
+        // controls
+        controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+        // ambient
+        scene.add( new THREE.AmbientLight( 0x222222 ) );
+
+        // light
+        var light = new THREE.DirectionalLight( 0xffffff, 1 );
+        light.position.set( 20,20, 0 );
+        scene.add( light );
+
+        // axes
+        scene.add( new THREE.AxesHelper( 20 ) );
+
+        // geometry
+        var geometry = new THREE.SphereGeometry( 5, 12, 8 );
+
+        // material
+        var material = new THREE.MeshPhongMaterial( {
+            color: 0x00ffff, 
+            flatShading: true,
+        } );
+
+        // mesh
+        mesh = new THREE.Mesh( geometry, material );
+        scene.add( mesh );
+
+        // decal related stuff 
+        mouse = new THREE.Vector2();
+        raycaster = new THREE.Raycaster();
+        helper = new THREE.Object3D();
+
+        decalMaterial = new THREE.MeshBasicMaterial( { color: 'red', depthWrite: false, polygonOffset: true, polygonOffsetFactor: - 4, } );
+
+        document.addEventListener( 'click', onClick );
+    }
+
+    function onClick( event ) {
+        event.preventDefault();
+
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+        raycaster.setFromCamera( mouse, camera );
+
+        var intersects = raycaster.intersectObject( mesh );
+
+        if ( intersects.length > 0 ) {
+          var n = intersects[ 0 ].face.normal.clone();
+          n.transformDirection( mesh.matrixWorld );
+          n.add( intersects[ 0 ].point );
+
+          helper.position.copy( intersects[ 0 ].point );
+          helper.lookAt( n );
+
+          var position = intersects[ 0 ].point;
+          var size = new THREE.Vector3( 1, 1, 1 );
+
+          var decalGeometry = new THREE.DecalGeometry( mesh, position, helper.rotation, size );
+
+          var decal = new THREE.Mesh( decalGeometry, decalMaterial );
+          scene.add( decal );
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame( animate );
+        renderer.render( scene, camera );
+    }
+
+  </script>
+</html>

@@ -15,6 +15,6 @@
 see: https://a-polygon-offset.glitch.me/a-decal.html
 
 ## THREE.DecalGeometry
-- features a simplified THREE.js demo copied from a broken fiddle in /three-demo.html
+- features a simplified THREE.js demo revived/re-interpreted from an old fiddle in /three-demo.html
 - also features an attempt to duplicate that demo in A-Frame, in /aframe-demo.html
 - a-decal.js is an expanded version of that demo that is more generalized

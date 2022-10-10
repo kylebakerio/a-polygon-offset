@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+<!--     <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.137.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module">
+        // import * as THREE from 'three';
+      // import { DecalGeometry } as DecalGeometry from THREE;
+      import { DecalGeometry } from 'https://unpkg.com/three@0.137.0/examples/js/geometries/DecalGeometry.js';
+      console.log('decalgeo',DecalGeometry)
+    </script> -->
+    <script src="https://unpkg.com/three@0.137.0/examples/js/geometries/DecalGeometry.js"></script>
+    <script src="polygon-offset.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <img id="poster-image" src="https://cdn.glitch.global/a5690e54-af54-41cd-85d9-b745739e4a11/00055.png?v=1664334108075">
+      </a-assets>
+      <a-sky polygon-offset color="#6EBAA7"></a-sky>
+      
+      <!--     parents have polygon offset:   -->
+      <a-box polygon-offset position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9">
+        <a-plane position="0 0 .5" rotation="0 0 0" src="#poster-image"></a-plane>
+        <a-plane position="-.5 0 0" rotation="0 -90 0" src="#poster-image"></a-plane>
+        <a-text color="green" align="center" position="0 .75 0" value="with polygon-offset"></a-text>
+      </a-box>
+      
+      <a-plane polygon-offset="depthWrite:false;" opacity=".4" side="double" position="-1.5 2 -3.5" rotation="0 45 0" width="1" height="2" color="yellow">
+        <a-plane material="src:#poster-image;" ></a-plane>
+      </a-plane>
+      
+      
+      <!--    parents without polygon offset:    -->
+      <a-box position="1 .5 -3" rotation="0 45 0" color="#4CC3D9">
+        <a-plane position="0 0 .5" rotation="0 0 0" src="#poster-image"></a-plane>
+        <a-plane position="-.5 0 0" rotation="0 -90 0" src="#poster-image"></a-plane>
+        <a-text rotation="0 -90 0" color="red" align="center" position="0 .75 0" value="without polygon-offset"></a-text>
+      </a-box>
+      
+      <a-plane side="double" position="1.5 2 -3.5" rotation="0 -45 0" width="1" height="2" color="yellow">
+        <a-plane material="src:#poster-image;" ></a-plane>
+      </a-plane>
+      
+     
+      
+      <a-sphere polygon-offset  position="0 1.25 -5" radius="1.25" color="blue" >
+          <a-entity position=".1 .1 .1"></a-entity>
+      </a-sphere>
+      <a-plane polygon-offset position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+    </a-scene>
+  </body>
+</html>
